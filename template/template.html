@@ -3,6 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+      rel="stylesheet"
+    />
     <style>
       body {
         display: flex;
@@ -10,7 +14,7 @@
       }
       .chapter {
         font-size: 26px;
-        font-family: "Palatino Linotype", serif;
+        font-family: "Noto Sans KR", monospace, "Times New Roman", serif;
         line-height: 180%;
         color: #3b3b3b;
         text-align: left;
@@ -25,16 +29,9 @@
       .sprite-ed {
         margin: 0 auto 30px auto;
       }
-
-      @font-face {
-        font-family: Palatino Linotype, "Palatino Linotype";
-        src: url("palatino-linotype.ttf");
-      }
     </style>
   </head>
   <body>
-    <img class="sprite-st" src="template/assets/spriteimg_st.png" />
     <div class="chapter">${content}</div>
-    <img class="sprite-ed" src="template/assets/spriteimg_ed.png" />
   </body>
 </html>
