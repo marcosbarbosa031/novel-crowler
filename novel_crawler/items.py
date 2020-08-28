@@ -6,5 +6,5 @@ class NovelChapterItem(scrapy.Item):
     title = scrapy.Field()
     number = scrapy.Field()
     link = scrapy.Field()
-    text = scrapy.Field()
+    body = scrapy.Field()
 
