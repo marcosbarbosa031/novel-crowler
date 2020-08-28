@@ -1,5 +1,6 @@
 import scrapy, re, json, os, io, pdfkit
 
+from xhtml2pdf import pisa
 from novel_crawler.items import NovelChapterItem
 
 class ReadlightnovelsSpider(scrapy.Spider):
@@ -41,6 +42,11 @@ class ReadlightnovelsSpider(scrapy.Spider):
         if not os.path.exists('Novels/Solo Leveling/'):
             os.makedirs(os.path.dirname('Novels/Solo Leveling/'))
         
-        
-        with io.open(f'Novels/Solo Leveling/{title}.html', 'w', encoding='utf-8') as f:
-            f.write(self.template.replace('${content}', body))
+        pdf_file = open(f'Novels/Solo Leveling/{title}.pdf', 'w+b')
+
+        status = pisa.CreatePDF(
+            self.template.replace('${content}', body),
+            dest = pdf_file
+        )
+
+        pdf_file.close()
