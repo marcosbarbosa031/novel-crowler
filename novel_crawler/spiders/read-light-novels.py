@@ -1,6 +1,5 @@
-import scrapy, re, json, os, io, pdfkit
+import scrapy, os
 
-from xhtml2pdf import pisa
 from novel_crawler.items import NovelChapterItem
 
 class ReadlightnovelsSpider(scrapy.Spider):
@@ -8,16 +7,12 @@ class ReadlightnovelsSpider(scrapy.Spider):
     allowed_domains = ['readlightnovels.net']
     start_urls = ['https://readlightnovels.net/only-i-level-up.html']
     chapter_url = 'https://readlightnovels.net/only-i-level-up/$.html'
-    template = ''
+    novel = ''
     page = 1
 
     def parse(self, response):
-        with io.open('template/template.html', 'r', encoding='utf-8') as f:
-            self.template = f.read()
-        
         for chapters in response.css('ul.list-chapter li'):
             link = chapters.css('a::attr(href)').extract_first()
-
             yield response.follow(link, self.parse_chapter)
         
         self.page += 1
@@ -28,13 +23,13 @@ class ReadlightnovelsSpider(scrapy.Spider):
         
     def parse_chapter(self, response):
         link = response.url
-        novel = response.css('a.truyen-title::text').extract_first()
+        self.novel = response.css('a.truyen-title::text').extract_first()
         title = response.css('a.chapter-title::text').extract_first()
         body = response.css('div.chapter-content').extract_first()
 
-        chapter = NovelChapterItem(novel = novel, title = title, link = link, body = body)
+        chapter = NovelChapterItem(novel = self.novel, title = title, link = link, body = body)
 
-        self.save_pdf(body, title)
+        # self.save_pdf(body, title)
 
         yield chapter
 
