@@ -8,15 +8,11 @@ class NovelCrawlerPipeline:
     template = ''
 
     def open_spider(self, spider):
-        print("===================| Pipeline |====================")
         with io.open('template/template.html', 'r', encoding='utf-8') as f:
             self.template = f.read()
         
         if not os.path.exists(f'Novels/Solo Leveling Novel (Only I Level Up Novel)/'):
             os.makedirs(os.path.dirname(f'Novels/Solo Leveling Novel (Only I Level Up Novel)/'))
-
-    def close_spider(self, spider):
-        print("===================================================")
 
     def process_item(self, item, spider):
         self.save_pdf(item)

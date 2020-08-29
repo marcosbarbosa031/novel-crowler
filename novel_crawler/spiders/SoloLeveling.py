@@ -3,8 +3,8 @@ import scrapy, os, json
 from scrapy.http import FormRequest, HtmlResponse
 from novel_crawler.items import NovelChapterItem
 
-class ReadlightnovelsSpider(scrapy.Spider):
-    name = 'ReadLightNovels'
+class SoloLevelingSpider(scrapy.Spider):
+    name = 'SoloLeveling'
     allowed_domains = ['readlightnovels.net']
     start_urls = ['https://readlightnovels.net/only-i-level-up.html']
     novel = ''
