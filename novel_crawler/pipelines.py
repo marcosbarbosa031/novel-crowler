@@ -17,14 +17,13 @@ class NovelCrawlerPipeline:
 
     def close_spider(self, spider):
         print("===================================================")
-        print(spider.novel)
 
     def process_item(self, item, spider):
         self.save_pdf(item)
         return item
     
     def save_pdf(self, item):
-        pdf_file = open(f"Novels/{item['novel']}/{item['title']}.pdf", 'w+b')
+        pdf_file = open(f"Novels/{item['novel']}/{item['chapter']}.pdf", 'w+b')
 
         status = pisa.CreatePDF(
             self.template.replace('${content}', item['body']),
