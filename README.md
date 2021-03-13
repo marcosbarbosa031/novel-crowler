@@ -13,9 +13,9 @@ pip install -r requirements.txt
 
 # Runing the crawler
 
-Downloading Solo Leveling chapters
+Downloading Web Novel chapters from readlightnovels.net passing the novel url as an argument
 ```
-scrapy crawl SoloLeveling
+scrapy crawl WebNovel -a url=https://readlightnovels.net/only-i-level-up.html
 ```
 
 It will download the chapters in PDF on the following dirrectory

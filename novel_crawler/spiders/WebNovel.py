@@ -3,15 +3,21 @@ import scrapy, os, json
 from scrapy.http import FormRequest, HtmlResponse
 from novel_crawler.items import NovelChapterItem
 
-class SoloLevelingSpider(scrapy.Spider):
-    name = 'SoloLeveling'
+class WebNovelSpider(scrapy.Spider):
+    name = 'WebNovel'
     allowed_domains = ['readlightnovels.net']
-    start_urls = ['https://readlightnovels.net/only-i-level-up.html']
+    start_urls = []
+    pagination_id = ''
     novel = ''
     page = 1
 
+    def __init__(self, url):
+        self.start_urls = [url]
+
     def parse(self, response):
         html = self.get_pagination_content(response) if self.page > 1 else response
+        if self.page == 1:
+            self.pagination_id = html.css('input#id_post::attr(value)').extract_first()
 
         for chapters in html.css('ul.list-chapter li'):
             link = chapters.css('a::attr(href)').extract_first()
@@ -37,7 +43,7 @@ class SoloLevelingSpider(scrapy.Spider):
         formdata = {
             'action': 'tw_ajax',
             'type': 'pagination',
-            'id': '256775',
+            'id': f'{self.pagination_id}',
             'page': f'{self.page}',
         }
         pagination_url = 'https://readlightnovels.net/wp-admin/admin-ajax.php'
